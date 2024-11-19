@@ -1,0 +1,48 @@
+services:
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  postgres:
+    image: postgres:16
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: limon1441
+      POSTGRES_DB: course_project
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+
+  order_system:
+    build: ./order_system
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/course_project
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: limon1441
+    depends_on:
+      - postgres
+      - rabbitmq
+
+  user_system:
+    build: ./user_system
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/course_project
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: limon1441
+    depends_on:
+      - postgres
+      - rabbitmq
+
+volumes:
+  postgres_data:
+
+
