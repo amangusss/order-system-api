@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: user-system
+
+  datasource:
+    url: jdbc:postgresql://postgres:5432/course_project
+    username: postgres
+    password: limon1441
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: guest
+    password: guest
+    listener:
+      simple:
+        retry:
+          enabled: true
+          initial-interval: 1000
+          max-attempts: 5
+          multiplier: 2.0
+
+jwt:
+  secret: "357638792F423F4428472B4B6250655368566D597133743677397A2443264629"
+  expiration: 86400000
+
+server:
+  port: 8082
+
+rabbitmq:
+  user:
+    queue: user_queue
+
+logging:
+  level:
+    org:
+      springframework:
+        amqp: DEBUG
+        rabbit: DEBUG
