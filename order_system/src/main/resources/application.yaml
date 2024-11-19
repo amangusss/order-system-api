@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: order-system
+
+  datasource:
+    url: jdbc:postgresql://postgres:5432/course_project
+    username: postgres
+    password: limon1441
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: guest
+    password: guest
+
+server:
+  port: 8081
